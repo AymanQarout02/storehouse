@@ -19,6 +19,8 @@ class ProductRequest extends FormRequest{
             'quantity' => ['required', 'integer', 'min:1'],
             'price' => ['required', 'numeric', 'min:1'],
             'image' => ['nullable', 'image', 'max:2048'],
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id',
         ];
     }
 

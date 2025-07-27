@@ -5,6 +5,14 @@
         </h2>
     </x-slot>
 
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold text-white">Categories</h1>
+        <a href="{{ route('categories.create') }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+            Create Category
+        </a>
+    </div>
+
     <div class="bg-gray-900 text-white min-h-screen py-8">
         <div class="max-w-6xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
 

@@ -50,7 +50,7 @@ class ProductService
         $product = Product::create($data);
 
         if ($request->filled('categories')) {
-            syncProductCategories($product,$request->categories);
+            $product->categories()->sync($request->categories);
         }
         return $product;
     }
@@ -67,7 +67,7 @@ class ProductService
         $product->update($data);
 
         if ($request->filled('categories')) {
-            syncProductCategories($product,$request->categories);
+            $product->categories()->sync($request->categories);
         }
 
     }
