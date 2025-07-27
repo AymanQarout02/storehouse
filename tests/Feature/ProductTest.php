@@ -24,7 +24,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_user_can_create_a_product()
+    public function authenticated_admin_or_manager_can_create_a_product()
     {
         $user = User::factory()->create([
             'role' => 'admin',
@@ -45,7 +45,33 @@ class ProductTest extends TestCase
 
     }
     /** @test */
-    public function authenticated_user_can_delete_a_product()
+    public function authenticated_admin_or_manager_can_update_a_product()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $product = Product::factory()->create([
+            'created_by' => $user->id
+        ]);
+
+        $response = $this->actingAs($user)->put("/products/{$product->id}", [
+            'name' => 'Updated Product',
+            'description' => 'An updated product description',
+            'quantity' => 10,
+            'price' => 79.99,
+        ]);
+
+        $response->assertRedirect('/products/my_products');
+
+        $this->assertDatabaseHas('products', [
+            'name' => 'Updated Product',
+            'created_by' => $user->id,
+        ]);
+
+    }
+    /** @test */
+    public function authenticated_admin_or_manager_can_delete_a_product()
     {
         $user = User::factory()->create([
             'role' => 'admin',

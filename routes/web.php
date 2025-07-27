@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin,manager'])->group(function () {
     Route::get('/products/my_products', [ProductController::class, 'myProducts'])
         ->name('products.my_products');
+
     Route::resource('products', ProductController::class)->except(['index', 'show']);
 
     Route::get('/categories-list', [CategoryController::class, 'list'])
