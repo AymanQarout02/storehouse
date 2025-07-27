@@ -22,13 +22,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/products', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::resource('categories', CategoryController::class)->only(['index']);
-});
-
 Route::middleware(['auth', 'role:admin,manager'])->group(function () {
     Route::get('/products/my_products', [ProductController::class, 'myProducts'])
         ->name('products.my_products');
@@ -36,8 +29,17 @@ Route::middleware(['auth', 'role:admin,manager'])->group(function () {
 
     Route::get('/categories-list', [CategoryController::class, 'list'])
         ->name('categories.list');
-    Route::resource('categories', CategoryController::class)->except(['index']);
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+    Route::resource('categories', CategoryController::class);
+});
+
+
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
