@@ -8,20 +8,6 @@
     <div class="bg-gray-900 text-white min-h-screen py-8">
         <div class="max-w-7xl mx-auto px-4">
 
-{{--            <div class="flex flex-wrap gap-2 mb-6">--}}
-{{--                <a href="/products"--}}
-{{--                   class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm transition">--}}
-{{--                    All--}}
-{{--                </a>--}}
-{{--                @foreach ($categories as $category)--}}
-{{--                    <a href="/categories/{{ $category->id }}"--}}
-{{--                       class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm transition">--}}
-{{--                        {{ $category->name }}--}}
-{{--                    </a>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
-
-
             @if(session('success'))
                 <div class="bg-green-600 text-white p-3 rounded mb-6">
                     {{ session('success') }}

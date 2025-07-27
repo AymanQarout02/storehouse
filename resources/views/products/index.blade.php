@@ -37,7 +37,7 @@
                             <p class="text-sm">Available: <span class="font-semibold">{{ $product->quantity }}</span></p>
                             <p class="text-sm mb-3">Price: <span class="font-semibold">${{ $product->price }}</span></p>
 
-                            {{-- Product Categories --}}
+
                             <div class="flex flex-wrap gap-2">
                                 @foreach($product->categories as $category)
                                     <a href="/categories/{{ $category->id }}"
@@ -48,7 +48,6 @@
                             </div>
                         </div>
 
-                        {{-- Show Details Button --}}
                         <a href="/products/{{ $product->id }}"
                            class="mt-4 bg-blue-600 hover:bg-blue-700 text-center px-3 py-2 rounded text-sm transition">
                             Show Details
@@ -57,7 +56,6 @@
                 @endforeach
             </div>
 
-            {{-- ✅ Pagination --}}
             <div class="mt-8">
                 {{ $products->links('pagination::tailwind') }}
             </div>

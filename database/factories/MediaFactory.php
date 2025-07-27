@@ -18,14 +18,14 @@ class MediaFactory extends Factory
         $fileName = uniqid('product_') . '.jpg';
         $filePath = 'products/' . $fileName;
 
-        $image = Http::get('https://picsum.photos/400/300'); // 400x300 random image
+        $image = Http::get('https://picsum.photos/400/300');
         Storage::disk('public')->put($filePath, $image->body());
 
         return [
             'file_name'  => $this->faker->word() . '.jpg',
-            'file_path'  => $filePath, // just a fake path (you can copy real images here later)
+            'file_path'  => $filePath,
             'file_type'  => 'image/jpeg',
-            'file_size'  => $this->faker->numberBetween(50000, 2000000), // 50KB–2MB
+            'file_size'  => $this->faker->numberBetween(50000, 2000000),
             'created_by' => User::inRandomOrder()->first()?->id ?? 1,
         ];
     }

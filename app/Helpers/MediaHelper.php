@@ -2,7 +2,7 @@
 
 use App\Models\Media;
 if (!function_exists('uploadMedia')) {
-    function uploadMedia($file, $folder = 'uploads', $disk = 'public'){
+    function uploadMedia($file, $folder = 'products', $disk = 'public'){
 
         $filePath = $file->store($folder, $disk);
 
