@@ -15,7 +15,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence(10),
             'quantity' => $this->faker->numberBetween(1, 100),
             'price' => $this->faker->randomFloat(2, 1, 1000),
-            'created_by' => User::inRandomOrder()->first()?->id ?? 1,
+            'created_by' => User::where('role', 'manager')->inRandomOrder()->first()?->id ?? 1,
             'media_id' => Media::factory()
         ];
     }
