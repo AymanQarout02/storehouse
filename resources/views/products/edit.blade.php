@@ -58,7 +58,7 @@
                         class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-semibold">
                     Save Product
                 </button>
-                <a href="/products/my_products">Cancel</a>
+                <a href="{{url()->previous()}}">Cancel</a>
             </form>
         </div>
     </div>

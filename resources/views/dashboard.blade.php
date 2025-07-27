@@ -9,6 +9,15 @@
                 <a href="{{ route('users.index') }}" class="block bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded transition">Manage Users</a>
             @endif
             <a href="{{ route('products.index') }}" class="block bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded transition">All Products</a>
+            <a href="{{ route('categories.create') }}"
+               class="block bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded transition">
+                Create Category
+            </a>
+            <a href="{{ route('categories.list') }}"
+               class="block bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded transition">
+                Manage Categories
+            </a>
+
         </aside>
 
         <main class="flex-1 p-10">
@@ -30,6 +39,7 @@
                     <h3 class="text-lg font-semibold">Users</h3>
                     <p class="text-3xl font-bold mt-2">{{ $totalUsers }}</p>
                 </div>
+
             </div>
 
             <!-- Charts -->

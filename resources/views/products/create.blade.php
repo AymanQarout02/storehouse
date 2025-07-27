@@ -8,7 +8,6 @@
     <div class="bg-gray-900 text-white min-h-screen py-8">
         <div class="max-w-5xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
 
-            {{-- ✅ Page Title --}}
             <h3 class="text-2xl font-semibold mb-6 border-b border-gray-700 pb-2">
                 Add a New Product
             </h3>
@@ -16,7 +15,6 @@
             <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
-                {{-- ✅ Product Name --}}
                 <div>
                     <label class="block text-gray-300 mb-1 font-medium">Product Name</label>
                     <input type="text" name="name" value="{{ old('name') }}"
@@ -26,7 +24,6 @@
                     @enderror
                 </div>
 
-                {{-- ✅ Description --}}
                 <div>
                     <label class="block text-gray-300 mb-1 font-medium">Description</label>
                     <textarea name="description" rows="4"
@@ -36,7 +33,6 @@
                     @enderror
                 </div>
 
-                {{-- ✅ Quantity & Price in Grid --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-gray-300 mb-1 font-medium">Quantity</label>
@@ -57,7 +53,6 @@
                     </div>
                 </div>
 
-                {{-- ✅ Categories --}}
                 <div>
                     <label class="block text-gray-300 mb-1 font-medium">Categories (comma-separated)</label>
                     <input type="text" name="categories" placeholder="e.g., Electronics, Mobile, Accessories"
@@ -68,7 +63,6 @@
                     @enderror
                 </div>
 
-                {{-- ✅ Product Image --}}
                 <div>
                     <label class="block text-gray-300 mb-1 font-medium">Product Image</label>
                     <input type="file" name="image"
@@ -78,7 +72,6 @@
                     @enderror
                 </div>
 
-                {{-- ✅ Buttons --}}
                 <div class="flex items-center gap-4">
                     <button type="submit"
                             class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded text-white font-semibold transition">
