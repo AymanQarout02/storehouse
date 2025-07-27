@@ -17,14 +17,18 @@ class ProductService
 {
     public function getAllProducts() {
 
-        return Cache::remember('products_list', 60, function () {
-            return Product::with('creator', 'categories')->orderByDesc('created_at')->paginate(9);
+        $page = request('page', 1);
+
+        return Cache::remember("products_list_page_{$page}", 60, function () {
+            return Product::with('creator', 'categories')
+                ->orderByDesc('created_at')
+                ->paginate(9);
         });
     }
 
     public function getAllCategories()  {
 
-        return Cache::remember('categories_list', 60, function () {
+        return Cache::remember('categories_list', 3600, function () {
             return Category::all();
         });
     }
@@ -35,54 +39,39 @@ class ProductService
             paginate(3);
     }
 
-    public function storeProduct(ProductRequest $request, int $userId) {
-        Cache::forget('products_list');
-        Cache::forget('total_products');
-        Cache::forget('product_trend');
-        Cache::forget('category_product_counts');
+    public function storeProduct($data, int $userId) {
 
-        $data = $request->validated();
 
         $data['created_by'] = $userId;
 
-        $this->storeMedia($request , $data);
+        $this->storeMedia($data);
 
         $product = Product::create($data);
 
-        if ($request->filled('categories')) {
-            $product->categories()->sync($request->categories);
+        if ($data['categories']) {
+            $product->categories()->sync($data['categories']);
         }
         return $product;
     }
-    public function updateProduct(ProductRequest $request, $product) {
-        Cache::forget('products_list');
-        Cache::forget('total_products');
-        Cache::forget('product_trend');
-        Cache::forget('category_product_counts');
+    public function updateProduct($data, $product) {
 
-        $data = $request->validated();
-
-        $this->storeMedia($request , $data);
+        $this->storeMedia($data);
 
         $product->update($data);
 
-        if ($request->filled('categories')) {
-            $product->categories()->sync($request->categories);
+        if ($data['categories']) {
+            $product->categories()->sync($data['categories']);
         }
 
     }
 
-    public function storeMedia($request , array & $data){
-        if ($request->hasFile('image')) {
-            $data['media_id'] = uploadMedia($request->file('image') , 'products' , 'public');
+    public function storeMedia(array & $data){
+        if ($data['image']) {
+            $data['media_id'] = uploadMedia($data['image']);
         }
     }
 
     public function deleteProduct(Product $product) {
-        Cache::forget('products_list');
-        Cache::forget('total_products');
-        Cache::forget('product_trend');
-        Cache::forget('category_product_counts');
 
         if ($product->media_id) {
             Storage::disk('public')->delete($product->media->path);

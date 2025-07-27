@@ -4,7 +4,7 @@ namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest{
+class ProductUpdateRequest extends FormRequest{
 
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class ProductRequest extends FormRequest{
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:products,name'],
+            'name' => ['required', 'string', 'max:255', 'unique:products,name,'.$this->product->id],
             'description' => ['required', 'string'],
             'quantity' => ['required', 'integer', 'min:1'],
             'price' => ['required', 'numeric', 'min:1'],

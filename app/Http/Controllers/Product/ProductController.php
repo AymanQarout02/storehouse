@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Media;
 use App\Models\Product;
@@ -23,7 +24,6 @@ class ProductController extends Controller
 
     public function index()
     {
-
         $products = $this->productService->getAllProducts();
 
         $categories = $this->productService->getAllCategories();
@@ -53,7 +53,10 @@ class ProductController extends Controller
     }
     public function store(ProductRequest $request)
     {
-        $this->productService->storeProduct($request , auth()->id());
+
+        $this->productService->storeProduct($request->validated() , auth()->id());
+
+
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
@@ -63,9 +66,9 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        $this->productService->updateProduct($request, $product);
+        $this->productService->updateProduct($request->validated(), $product);
 
         return redirect()->route('products.my_products')->with('success', 'Product updated successfully.');
     }

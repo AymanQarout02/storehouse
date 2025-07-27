@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\Category\CategoryRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\CategoryService;
@@ -51,9 +53,10 @@ class CategoryController extends Controller
     {
         return view('categories.create');
     }
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->categoryService->storeCategory($request);
+
+        $this->categoryService->storeCategory($request->validated());
 
         return redirect()->route('categories.list')->with('success', 'Category created successfully.');
     }
@@ -62,9 +65,10 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
-        $this->categoryService->updateCategory($request, $category);
+        //here
+        $this->categoryService->updateCategory($request->validated(), $category);
 
         return redirect()->route('categories.list')->with('success', 'Category updated successfully.');
     }

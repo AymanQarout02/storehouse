@@ -25,33 +25,18 @@ class CategoryService
     {
         return Category::withCount('products')->orderByDesc('created_at')->paginate(9);
     }
-    public function storeCategory(Request $request)
+    public function storeCategory($data)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
+        return Category::create([
+            'name' => $data['name'],
         ]);
-
-        Cache::forget('total_categories');
-        Cache::forget('category_product_counts');
-
-        $category = Category::create([
-            'name' => $request->name,
-        ]);
-
-        return $category;
     }
 
-    public function updateCategory(Request $request, Category $category)
+    public function updateCategory($data, Category $category)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-        ]);
-
-        Cache::forget('total_categories');
-        Cache::forget('category_product_counts');
 
         $category->update([
-            'name' => $request->name,
+            'name' => $data['name'],
         ]);
 
         return $category;
@@ -63,8 +48,6 @@ class CategoryService
             return false;
         }
 
-        Cache::forget('total_categories');
-        Cache::forget('category_product_counts');
         $category->delete();
 
         return true;
