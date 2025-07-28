@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\UserController;
+
+
+Route::get('/api/categories', [CategoryApiController::class, 'index']);
+
 
 Route::get('/', function () {
     return view('welcome');

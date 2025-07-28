@@ -8,10 +8,22 @@ use Illuminate\Http\Request;
 
 class CategoryApiController extends Controller
 {
-    public function index()
+
+
+
+    public function index(Request $request)
     {
-        return response()->json(Category::withCount('products')->orderByDesc('created_at')->paginate(9));
+        $query = $request->input('term');
+
+        $categories = Category::query()
+            ->when($query, fn($q) => $q->where('name', 'LIKE', "%{$query}%"))
+            ->get(['id', 'name']);
+
+        $results = $categories->map(fn($cat) => ['id' => $cat->id, 'text' => $cat->name]);
+
+        return response()->json(['results' => $results]);
     }
+
 
     public function store(Request $request)
     {

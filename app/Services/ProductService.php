@@ -41,10 +41,13 @@ class ProductService
 
     public function storeProduct($data, int $userId) {
 
-
         $data['created_by'] = $userId;
 
-        $this->storeMedia($data);
+        if (isset($data['image']) && $data['image']) {
+            $data['media_id'] = uploadMedia($data['image']);
+        }else{
+            $data['media_id'] = null;
+        }
 
         $product = Product::create($data);
 
@@ -55,20 +58,17 @@ class ProductService
     }
     public function updateProduct($data, $product) {
 
-        $this->storeMedia($data);
-
+        if (isset($data['image'])) {
+            $data['media_id'] = uploadMedia($data['image']);
+        }else{
+            $data['media_id'] = $product->media_id;
+        }
         $product->update($data);
 
         if ($data['categories']) {
             $product->categories()->sync($data['categories']);
         }
 
-    }
-
-    public function storeMedia(array & $data){
-        if ($data['image']) {
-            $data['media_id'] = uploadMedia($data['image']);
-        }
     }
 
     public function deleteProduct(Product $product) {
